@@ -50,7 +50,7 @@ class UserCreate(BaseModel):
     username: str
     email: EmailStr
     password: str
-    profile_picture: str = None  # Optional base64 image data
+    profile_picture: str | None = None  # Use pipe for Python 3.10+ or keep it optional
 
 class Token(BaseModel):
     access_token: str

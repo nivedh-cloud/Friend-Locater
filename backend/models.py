@@ -4,20 +4,34 @@ from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 import datetime
 import os
-
+import logging
 from urllib.parse import quote_plus
 
 # Database setup
-# Use environment variables, with fallback to localhost for development
-db_user = os.getenv("DB_USER", "root")
-db_password = os.getenv("DB_PASSWORD", "nivi@Cyrus123")
-db_host = os.getenv("DB_HOST", "localhost")
-db_port = os.getenv("DB_PORT", "3306")
-db_name = os.getenv("DB_NAME", "friend_tracker")
+# Check for Railway's DATABASE_URL first (preferred), then fall back to individual variables
+database_url = os.getenv("DATABASE_URL")
 
-# Properly encode the password to handle special characters ('@')
-password = quote_plus(db_password)
-SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{db_user}:{password}@{db_host}:{db_port}/{db_name}"
+if database_url:
+    # Railway provides DATABASE_URL for MySQL
+    # Convert mysql:// to mysql+mysqlconnector://
+    if database_url.startswith("mysql://"):
+        SQLALCHEMY_DATABASE_URL = database_url.replace("mysql://", "mysql+mysqlconnector://", 1)
+    else:
+        SQLALCHEMY_DATABASE_URL = database_url
+else:
+    # Fallback to individual environment variables for local development
+    db_user = os.getenv("DB_USER", "root")
+    db_password = os.getenv("DB_PASSWORD", "nivi@Cyrus123")
+    db_host = os.getenv("DB_HOST", "localhost")
+    db_port = os.getenv("DB_PORT", "3306")
+    db_name = os.getenv("DB_NAME", "friend_tracker")
+    
+    # Properly encode the password to handle special characters ('@')
+    password = quote_plus(db_password)
+    SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{db_user}:{password}@{db_host}:{db_port}/{db_name}"
+
+logger = logging.getLogger(__name__)
+logger.info(f"Database URL configured (redacted for security)")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

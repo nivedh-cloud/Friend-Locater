@@ -16,6 +16,20 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="FriendLocator API")
 
+# Configure CORS to allow your Vercel frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:8100",
+        "https://frontend-indol-sigma-60.vercel.app",
+        "*"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Initialize database tables on startup
 @app.on_event("startup")
 async def startup_event():

@@ -25,5 +25,5 @@ jobs:
         railway up --service web --detach
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+        RAILWAY_PROJECT_ID: ${{ secrets.API_TOKENS }}
         RAILWAY_ENVIRONMENT_NAME: production

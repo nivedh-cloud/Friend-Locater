@@ -1,1 +1,1 @@
-web: cd backend && gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT --timeout 120
+web: cd backend && gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind "0.0.0.0:${PORT:-8000}" --timeout 120

@@ -3,13 +3,21 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 import datetime
+import os
 
 from urllib.parse import quote_plus
 
 # Database setup
+# Use environment variables, with fallback to localhost for development
+db_user = os.getenv("DB_USER", "root")
+db_password = os.getenv("DB_PASSWORD", "nivi@Cyrus123")
+db_host = os.getenv("DB_HOST", "localhost")
+db_port = os.getenv("DB_PORT", "3306")
+db_name = os.getenv("DB_NAME", "friend_tracker")
+
 # Properly encode the password to handle special characters ('@')
-password = quote_plus("nivi@Cyrus123")
-SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://root:{password}@localhost:3306/friend_tracker"
+password = quote_plus(db_password)
+SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{db_user}:{password}@{db_host}:{db_port}/{db_name}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

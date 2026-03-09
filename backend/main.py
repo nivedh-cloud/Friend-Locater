@@ -6,10 +6,28 @@ from datetime import datetime, timedelta
 import models
 import auth_utils
 from sqlalchemy.orm import Session
-from models import SessionLocal, User, FriendLink, LocationHistory
+from models import SessionLocal, User, FriendLink, LocationHistory, Base, engine
 from pydantic import BaseModel, EmailStr
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="FriendLocator API")
+
+# Initialize database tables on startup
+@app.on_event("startup")
+async def startup_event():
+    """Create database tables on application startup"""
+    try:
+        logger.info("Creating database tables...")
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables initialized successfully")
+    except Exception as e:
+        logger.error(f"Error initializing database: {e}")
+        # Don't crash the app, just log the error
+        # This allows it to handle connection retries
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 

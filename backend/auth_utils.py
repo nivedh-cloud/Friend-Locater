@@ -2,9 +2,10 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from typing import Optional
+import os
 
 # Configuration
-SECRET_KEY = "SUPER_SECRET_KEY_FOR_JWT_FRIEND_LOCATOR" # In production, use environment variable
+SECRET_KEY = os.getenv("SECRET_KEY", "SUPER_SECRET_KEY_FOR_JWT_FRIEND_LOCATOR")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 # 24 hours
 

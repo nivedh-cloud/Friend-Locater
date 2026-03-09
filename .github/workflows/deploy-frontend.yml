@@ -28,10 +28,10 @@ jobs:
       run: CI=false npm run build
     
     - name: Deploy to Vercel
-      uses: amondnet/vercel-action@v20
-      with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        vercel-org-id: "team_89G9Uv5pU4z5S7Fm"
-        vercel-project-id: "prj_7U3v2m1n8z9Xy4Wq"
-        working-directory: ./frontend
-        vercel-args: '--prod'
+      working-directory: ./frontend
+      run: |
+        npm install -g vercel
+        rm -rf .vercel
+        mkdir -p .vercel
+        echo '{"orgId":"team_89G9Uv5pU4z5S7Fm","projectId":"prj_7U3v2m1n8z9Xy4Wq"}' > .vercel/project.json
+        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes --no-wait

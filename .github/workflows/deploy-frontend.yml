@@ -31,4 +31,6 @@ jobs:
       working-directory: ./frontend
       run: |
         npm install -g vercel
-        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes --org nivinehit-4667 --project friend-locater
+        mkdir -p .vercel
+        echo '{"orgId":"team_89G9Uv5pU4z5S7Fm","projectId":"prj_7U3v2m1n8z9Xy4Wq"}' > .vercel/project.json
+        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes

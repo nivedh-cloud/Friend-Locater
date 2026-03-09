@@ -1,3 +1,4 @@
+// Vercel deployment trigger
 import React, { useState } from 'react';
 import './App.css';
 import TrackingDashboard from './features/tracking/TrackingDashboard';

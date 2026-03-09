@@ -4,4 +4,4 @@ export const GOOGLE_MAPS_API_KEY = 'AIzaSyBmWoyHtrxYaF631bZCzGFr_NB8r3SyOvE';
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 export const API_BASE_URL = isDevelopment 
     ? 'http://localhost:8000'
-    : `${window.location.protocol}//${window.location.hostname}:8000`; // On Railway, use same domain
+    : 'https://backend-production-af9c.up.railway.app'; // Replace with your actual Railway service URL

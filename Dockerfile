@@ -18,17 +18,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy entire app
 COPY . .
 
-# Set Python path to include backend
+# Set Python path to include root so backend package is findable
 ENV PYTHONPATH=/app
 
-# Expose port
-EXPOSE 8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/docs').read()" || exit 1
+# Command to run the application using the backend package
+CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "backend.main:app", "--bind", "0.0.0.0:8000", "--timeout", "120"]
 
 # Run the app from backend directory
 WORKDIR /app/backend
-# Use gunicorn on port 8000, Railway will handle proxy/port mapping
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "main:app", "--bind", "0.0.0.0:8000", "--timeout", "120"]
+# Use sh -c to allow environment variable expansion
+CMD ["sh", "-c", "gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:${PORT:-8000} --timeout 120"]

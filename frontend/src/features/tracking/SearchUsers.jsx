@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X, Send, Clock, UserCheck } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const SearchUsers = ({ onClose }) => {
   const [query, setQuery] = useState('');
@@ -18,7 +19,7 @@ const SearchUsers = ({ onClose }) => {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8000/search-users?query=${encodeURIComponent(searchQuery)}`, {
+      const response = await fetch(`${API_BASE_URL}/search-users?query=${encodeURIComponent(searchQuery)}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -40,7 +41,7 @@ const SearchUsers = ({ onClose }) => {
   const sendFriendRequest = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/friend-request/send', {
+      const response = await fetch(`${API_BASE_URL}/friend-request/send`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

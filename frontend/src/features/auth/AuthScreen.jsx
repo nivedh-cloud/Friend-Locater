@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, ArrowRight, MapPin, Camera } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const AuthScreen = ({ onLoginSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -43,7 +44,7 @@ const AuthScreen = ({ onLoginSuccess }) => {
         };
         const formBody = Object.keys(details).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(details[key])).join('&');
         
-        const response = await fetch('http://localhost:8000/token', {
+        const response = await fetch(`${API_BASE_URL}/token`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: formBody,
@@ -61,7 +62,7 @@ const AuthScreen = ({ onLoginSuccess }) => {
         }
       } else {
         // Registration Logic
-        const response = await fetch('http://localhost:8000/register', {
+        const response = await fetch(`${API_BASE_URL}/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

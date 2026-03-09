@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, X, Send, AlertCircle, CheckCircle } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const InviteFriend = ({ onClose }) => {
   const [email, setEmail] = useState('');
@@ -30,7 +31,7 @@ const InviteFriend = ({ onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/friend-request/send-by-email', {
+      const response = await fetch(`${API_BASE_URL}/friend-request/send-by-email`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

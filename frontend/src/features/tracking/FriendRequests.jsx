@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Check, X, AlertCircle } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const FriendRequests = ({ onClose }) => {
   const [requests, setRequests] = useState([]);
@@ -13,7 +14,7 @@ const FriendRequests = ({ onClose }) => {
   const fetchPendingRequests = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/friend-requests/pending', {
+      const response = await fetch(`${API_BASE_URL}/friend-requests/pending`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -28,7 +29,7 @@ const FriendRequests = ({ onClose }) => {
   const handleAccept = async (requestId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8000/friend-request/${requestId}/accept`, {
+      const response = await fetch(`${API_BASE_URL}/friend-request/${requestId}/accept`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -45,7 +46,7 @@ const FriendRequests = ({ onClose }) => {
   const handleReject = async (requestId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8000/friend-request/${requestId}/reject`, {
+      const response = await fetch(`${API_BASE_URL}/friend-request/${requestId}/reject`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

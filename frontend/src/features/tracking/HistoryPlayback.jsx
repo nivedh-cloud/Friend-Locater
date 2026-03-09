@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, ChevronLeft, ChevronRight, Play, Square, FastForward } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const HistoryPlayback = ({ onBack, selectedFriend, onHistoryUpdate }) => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -18,7 +19,7 @@ const HistoryPlayback = ({ onBack, selectedFriend, onHistoryUpdate }) => {
       try {
         const token = localStorage.getItem('token');
         const response = await fetch(
-          `http://localhost:8000/history/${selectedFriend.id}?date=${selectedDate}`,
+          `${API_BASE_URL}/history/${selectedFriend.id}?date=${selectedDate}`,
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
         const data = await response.json();

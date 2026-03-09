@@ -7,8 +7,7 @@ import HistoryPlayback from './HistoryPlayback';
 import GeofenceSettings from './GeofenceSettings';
 import InviteFriend from './InviteFriend';
 import FriendRequests from './FriendRequests';
-
-const API_BASE_URL = "http://localhost:8000";
+import { API_BASE_URL } from '../../config';
 
 const TrackingDashboard = ({ onLogout }) => {
   const [friends, setFriends] = useState([]);

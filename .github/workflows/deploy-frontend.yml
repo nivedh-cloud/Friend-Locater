@@ -31,4 +31,4 @@ jobs:
       working-directory: ./frontend
       run: |
         npm install -g vercel@latest
-        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes --scope nivinehit-4667 --name frontend
+        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes --name frontend
